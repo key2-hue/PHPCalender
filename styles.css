@@ -1,0 +1,20 @@
+.calender{
+  font-family: 'Source Sans Pro', sans-serif;
+  width: 400px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+table {
+  width: 200px;
+  margin: 0 auto;
+}
+
+th:nth-of-type(1), td:nth-of-type(1) {
+  color: red;
+}
+
+th:nth-of-type(7), td:nth-of-type(7) {
+  color: blue;
+}
+
