@@ -2,30 +2,60 @@
 
   date_default_timezone_set('Asia/Tokyo');
 
-  if(isset($_GET['ym'])) {
-    $ym = $_GET['ym'];
-  } else {
-    $ym = date('Y-m');
-  }
-
-
-
-  $timestamp = strtotime($ym . '-01');
-  if($timestamp === false) {
-    $ym = date('Y-m');
+class Calender {
+  public $prevMonth;
+  public $today;
+  public $title;
+  public $thisMonth;
+  public $nextMonth;
+  private $ym;
+  public $timestamp;
+  public $weeks;
+  public function __construct() {
+    if(isset($_GET['ym'])) {
+      $ym = $_GET['ym'];
+    } else {
+      $ym = date('Y-m');
+    }
     $timestamp = strtotime($ym . '-01');
+    if($timestamp === false) {
+      $ym = date('Y-m');
+      $timestamp = strtotime($ym . '-01');
+    }
+    $this->today = $this->today();
+    $this->title = $this->thisMonthTitle();
+    $this->thisMonth = $this->thisMonth();
   }
 
-  $today = date('Y-m-j');
+  public function today() {
+    $now = date('Y-m-j');
+    return $now;
+  }
 
-  $html_title = date('Y年n月', $timestamp);
+  public function thisMonthTitle() {
+    $html_title = date('Y年n月', $timestamp);
+    return $html_title;
+  }
 
+  public function prevMonth() {
+    $month = clone $this->thisMonth;
+    return $month->modify('-1 month')->format('Y-m');
+  }
 
-  $prev = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) - 1, 1, date('Y', $timestamp)));
-  $next = date('Y-m', mktime(0, 0, 0, date('m', $timestamp) + 1, 1, date('Y', $timestamp)));
-  $thisMonth = date('Y-m', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
+  public function thisMonth() {
+    $thisM = date('Y-m', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
+    return $thisM;
+  }
 
-  $day_count = date('t', $timestamp);
+  public function nextMonth() {
+    $month = clone $this->thisMonth;
+    return $month->modify('+1 month')->format('Y-m');
+  }
+
+  
+
+  public function days() {
+    $day_count = date('t', $timestamp);
 
   $youbi = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
 
@@ -57,10 +87,21 @@
       $week = '';
     }
   }
-
-class Calender {
-  
 }
+}
+  
+  
+  
+
+  
+  
+
+
+
+  
+
+  
+
 
 
 
