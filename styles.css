@@ -18,3 +18,27 @@ th:nth-of-type(7), td:nth-of-type(7) {
   color: blue;
 }
 
+.today {
+  background-color: limegreen;
+}
+
+th, tr {
+  height: 80px;
+}
+
+h3 {
+  width: 300px;
+  margin: 0 auto;
+  text-align: center;
+}
+
+.prev {
+  position: relative;
+  right: 20px;
+}
+
+.next {
+  position: relative;
+  left: 20px;
+}
+

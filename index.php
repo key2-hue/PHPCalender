@@ -14,7 +14,7 @@
 </head>
 <body>
     <div class="container">
-        <h3><a href="?ym=<?php echo $prev; ?>">&lt;</a> <?php echo $html_title; ?> <a href="?ym=<?php echo $next; ?>">&gt;</a></h3>
+        <h3><a href="?ym=<?php echo $prev; ?>" class="prev">&lt;</a><?php echo $html_title; ?><a href="?ym=<?php echo $next; ?>" class="next">&gt;</a></h3>
         <table class="table table-bordered">
             <tr>
                 <th>日</th>
@@ -27,8 +27,8 @@
             </tr>
             <?php
                 foreach ($weeks as $week) {
-                    echo $week;
-                }
+                  echo $week;
+              }
             ?>
         </table>
     </div>
