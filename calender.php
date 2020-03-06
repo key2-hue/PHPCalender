@@ -11,6 +11,7 @@ class Calender {
   public $ym;
   public $timestamp;
   public $weeks;
+  public $days;
   public function __construct() {
     if(isset($_GET['ym'])) {
       $ym = $_GET['ym'];
@@ -24,15 +25,11 @@ class Calender {
     }
    
     $this->today = $this->today();
-    echo $today;
-    
-    echo $title;
     $this->thisMonth = new DateTime($ym);
-    // $this->thisMonth = $this->ym;
     $this->title = $this->thisMonthTitle();
-    echo $thisMonth;
     $this->prevMonth = $this->prevMonth();
     $this->nextMonth = $this->nextMonth();
+    $this->days = $this->days();
     echo $nextMonth;
   }
 
@@ -47,7 +44,6 @@ class Calender {
 
   public function prevMonth() {
     $month = clone $this->thisMonth;
-    // $this->thisMonth->modify('-1 month')->format('Y-m');
     return $month->modify('-1 month')->format('Y-m');
   }
 
@@ -58,13 +54,14 @@ class Calender {
 
   public function nextMonth() {
     $month = clone $this->thisMonth;
-    // $this->thisMonth->modify('+1 month')->format('Y-m');
     return $month->modify('+1 month')->format('Y-m');
   }
 
   
 
   public function days() {
+    $ym = $_GET['ym'];
+    $timestamp = strtotime($ym . '-01');
     $day_count = date('t', $timestamp);
 
     $youbi = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
@@ -97,6 +94,7 @@ class Calender {
         $week = '';
       }
     }
+    return $weeks;
   }
 }
   
