@@ -32,6 +32,7 @@
               }
             ?>
         </table>
+        <p>この月の日数は<?php echo $weeks->dayCount(); ?>日です。</p>
     </div>
 </body>
 </html>

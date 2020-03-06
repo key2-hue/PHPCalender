@@ -77,7 +77,7 @@ class Calender {
 
       $date = $ym . '-' . $day;
 
-      if($today == $date) {
+      if($this->today == $date) {
         $week .= sprintf('<td class="today">%d' , $day);
       } else {
         $week .= sprintf('<td>%d' , $day);
@@ -95,6 +95,21 @@ class Calender {
       }
     }
     return $weeks;
+  }
+
+  public function dayCount() {
+    $ym = $_GET['ym'];
+    // $timestamp = strtotime($ym . '-01');
+    $count = new DatePeriod(
+      new DateTime('first day of ' . $ym),
+      new DateInterval('P1D'),
+      new DateTime('first day of ' . $ym . '+1 month')
+    );
+    $dayCount = 0;
+    foreach($count as $day) {
+      $dayCount ++;
+    }
+    return $dayCount;
   }
 }
   
