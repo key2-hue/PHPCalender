@@ -24,7 +24,7 @@ class Calender {
     }
     $this->today = $this->today();
     $this->title = $this->thisMonthTitle();
-    $this->thisMonth = $this->thisMonth();
+    $this->thisMonth = new DateTime('first day of this month');
   }
 
   public function today() {
