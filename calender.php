@@ -3,12 +3,12 @@
   date_default_timezone_set('Asia/Tokyo');
 
 class Calender {
-  public $prevMonth;
   public $today;
   public $title;
+  public $prevMonth;
   public $thisMonth;
   public $nextMonth;
-  private $ym;
+  public $ym;
   public $timestamp;
   public $weeks;
   public function __construct() {
@@ -22,9 +22,18 @@ class Calender {
       $ym = date('Y-m');
       $timestamp = strtotime($ym . '-01');
     }
+   
     $this->today = $this->today();
+    echo $today;
+    
+    echo $title;
+    $this->thisMonth = new DateTime($ym);
+    // $this->thisMonth = $this->ym;
     $this->title = $this->thisMonthTitle();
-    $this->thisMonth = new DateTime('first day of this month');
+    echo $thisMonth;
+    $this->prevMonth = $this->prevMonth();
+    $this->nextMonth = $this->nextMonth();
+    echo $nextMonth;
   }
 
   public function today() {
@@ -33,12 +42,12 @@ class Calender {
   }
 
   public function thisMonthTitle() {
-    $html_title = date('Y年n月', $timestamp);
-    return $html_title;
+    return $this->thisMonth->format('Y年m月');
   }
 
   public function prevMonth() {
     $month = clone $this->thisMonth;
+    // $this->thisMonth->modify('-1 month')->format('Y-m');
     return $month->modify('-1 month')->format('Y-m');
   }
 
@@ -49,6 +58,7 @@ class Calender {
 
   public function nextMonth() {
     $month = clone $this->thisMonth;
+    // $this->thisMonth->modify('+1 month')->format('Y-m');
     return $month->modify('+1 month')->format('Y-m');
   }
 
@@ -57,37 +67,37 @@ class Calender {
   public function days() {
     $day_count = date('t', $timestamp);
 
-  $youbi = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
+    $youbi = date('w', mktime(0, 0, 0, date('m', $timestamp), 1, date('Y', $timestamp)));
 
-  $weeks = [];
-  $week = '';
+    $weeks = [];
+    $week = '';
 
-  $dayOfWeek = date('Y-m-j', mktime(0, 0, 0, date('m', $timestamp) - 1, 1, date('Y', $timestamp)));
+    $dayOfWeek = date('Y-m-j', mktime(0, 0, 0, date('m', $timestamp) - 1, 1, date('Y', $timestamp)));
 
-  $week .= str_repeat('<td></td>', $youbi);
+    $week .= str_repeat('<td></td>', $youbi);
 
-  for( $day = 1; $day <= $day_count; $day++, $youbi++) {
+    for( $day = 1; $day <= $day_count; $day++, $youbi++) {
 
-    $date = $ym . '-' . $day;
+      $date = $ym . '-' . $day;
 
-    if($today == $date) {
-      $week .= sprintf('<td class="today">%d' , $day);
-    } else {
-      $week .= sprintf('<td>%d' , $day);
-    }
-    $week .= '</td>';
-
-    if($youbi % 7 == 6 || $day == $day_count) {
-      if($day == $day_count) {
-        $week .= str_repeat('<td></td>', 6 - ($youbi % 7));
+      if($today == $date) {
+        $week .= sprintf('<td class="today">%d' , $day);
+      } else {
+        $week .= sprintf('<td>%d' , $day);
       }
+      $week .= '</td>';
 
-      $weeks[] = '<tr>' . $week . '</tr>';
+      if($youbi % 7 == 6 || $day == $day_count) {
+        if($day == $day_count) {
+          $week .= str_repeat('<td></td>', 6 - ($youbi % 7));
+        }
 
-      $week = '';
+        $weeks[] = '<tr>' . $week . '</tr>';
+
+        $week = '';
+      }
     }
   }
-}
 }
   
   
